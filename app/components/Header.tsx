@@ -1,10 +1,19 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -14,70 +23,90 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-xl border-b-4 border-yellow-500/30">
-      <nav className="max-w-7xl mx-auto flex items-center justify-between py-4 px-4 md:px-8">
-        {/* Logo */}
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? 'bg-charcoal/95 backdrop-blur-md shadow-lg border-b border-gold/20 py-3'
+          : 'bg-cream/80 backdrop-blur-sm py-5'
+      }`}
+    >
+      <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-12 h-12">
-            <div className="absolute inset-0 bg-gradient-to-br from-yellow-500 to-red-700 rounded-full opacity-90 group-hover:opacity-100 transition-all shadow-lg"></div>
-            <div className="absolute inset-1 bg-white rounded-full flex items-center justify-center text-lg font-bold text-yellow-600">✓</div>
+          <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden ring-2 ring-gold/40 group-hover:ring-gold transition-all">
+            <Image
+              src="/images/brand-card.png"
+              alt="Y S Creations"
+              fill
+              className="object-cover object-top scale-[2.5] translate-y-1"
+            />
           </div>
           <div className="hidden sm:block">
-            <h1 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-red-800 to-yellow-600 bg-clip-text text-transparent tracking-tight">VESARA</h1>
-            <p className="text-xs md:text-sm text-yellow-700 font-bold tracking-widest">FINEST ORIGINS</p>
+            <p className="text-xl md:text-2xl font-serif font-bold text-gold-gradient tracking-wide">
+              Y S Creations
+            </p>
+            <p className={`text-[10px] md:text-xs tracking-[0.25em] uppercase font-medium ${scrolled ? 'text-gold/70' : 'text-gold-dark/80'}`}>
+              Crafted from the Finest Origins
+            </p>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-1 lg:gap-2">
+        <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="px-4 py-2 text-gray-800 hover:text-yellow-600 font-bold text-sm transition-all duration-300 hover:bg-yellow-50 rounded-lg underline-gold"
+              className={`px-4 py-2 text-sm font-medium tracking-wide transition-colors ${
+                scrolled ? 'text-white/80 hover:text-gold' : 'text-charcoal/70 hover:text-gold-dark'
+              }`}
             >
               {link.label}
             </Link>
           ))}
         </div>
 
-        {/* CTA Button */}
         <div className="flex items-center gap-3">
           <a
-            href="tel:+919606493393"
-            className="hidden sm:block px-6 py-2.5 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-red-900 font-bold rounded-full shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 text-sm"
+            href="/contact"
+            className="hidden sm:inline-flex items-center px-5 py-2.5 text-sm font-semibold tracking-wide bg-gold text-charcoal rounded-full hover:bg-gold-light transition-all duration-300 hover:shadow-[0_0_20px_rgba(201,162,39,0.4)]"
           >
-            📞 Call Now
+            Get a Quote
           </a>
 
-          {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-red-800 text-2xl font-bold hover:text-yellow-600 transition-colors"
+            type="button"
+            className={`md:hidden text-2xl p-1 ${scrolled ? 'text-gold' : 'text-charcoal'}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
           >
             {isMenuOpen ? '✕' : '☰'}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-gradient-to-b from-yellow-50 to-red-50 py-4 px-4 border-t-4 border-yellow-500/30 animate-fade-in-down">
+        <div className={`md:hidden backdrop-blur-md border-t py-4 px-4 animate-fade-in-down ${
+          scrolled ? 'bg-charcoal/98 border-gold/20' : 'bg-cream/98 border-gold/20'
+        }`}>
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="block py-3 text-gray-800 hover:text-yellow-600 font-bold text-base transition-colors"
+              className={`block py-3 font-medium border-b last:border-0 ${
+                scrolled
+                  ? 'text-white/90 hover:text-gold border-white/5'
+                  : 'text-charcoal/80 hover:text-gold-dark border-charcoal/5'
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               {link.label}
             </Link>
           ))}
           <a
-            href="tel:+919606493393"
-            className="block py-3 mt-3 text-center bg-gradient-to-r from-yellow-500 to-yellow-600 text-red-900 font-bold rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all shadow-lg"
+            href="/contact"
+            className="block mt-4 py-3 text-center bg-gold text-charcoal font-semibold rounded-full"
+            onClick={() => setIsMenuOpen(false)}
           >
-            📞 Call Now
+            Get a Quote
           </a>
         </div>
       )}

@@ -1,31 +1,14 @@
 import type { Metadata } from 'next';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SectionHeading from '../components/SectionHeading';
+import ProductMarquee from '../components/ProductMarquee';
+import { spiceProducts, dryFruitProducts } from '../data/products';
 
 export const metadata: Metadata = {
-  title: 'Products | VESARA - Spices & Dry Fruits',
-  description: 'Explore our complete range of premium spices, dry fruits, and food ingredients sourced from finest origins worldwide.',
-};
-
-const products = {
-  spices: [
-    { name: 'Black Pepper', origins: 'Karnataka, Kerala, Vietnam' },
-    { name: 'Green Cardamom', origins: 'Kerala, Tamil Nadu' },
-    { name: 'Black Cardamom', origins: 'Nepal, Sikkim, Siliguri' },
-    { name: 'Cloves', origins: 'Madagascar, Zanzibar' },
-    { name: 'Nutmeg & Mace', origins: 'Kerala' },
-    { name: 'Cinnamon', origins: 'Sri Lanka & Other Origins' },
-    { name: 'Star Anise', origins: 'India & International' },
-    { name: 'Bay Leaf', origins: 'India & International' },
-  ],
-  dryFruits: [
-    { name: 'Cashew Nuts', grade: 'Premium Grade' },
-    { name: 'Almonds', grade: 'California & Indian' },
-    { name: 'Pistachios', grade: 'Iranian Premium' },
-    { name: 'Raisins', grade: 'Golden & Black' },
-    { name: 'Dates', grade: 'Various Varieties' },
-    { name: 'Walnuts', grade: 'Premium Quality' },
-  ],
+  title: 'Products | Y S Creations — Spices, Dry Fruits & Food Ingredients',
+  description:
+    'Explore our complete range of premium whole spices, dry fruits and value-added food ingredients sourced from the finest origins worldwide.',
 };
 
 export default function Products() {
@@ -33,90 +16,88 @@ export default function Products() {
     <main className="min-h-screen flex flex-col">
       <Header />
 
-      {/* Hero Section */}
-      <section className="bg-gold text-maroon section-padding">
-        <div className="container-custom text-center">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4">Our Products</h1>
-          <p className="text-xl md:text-2xl">Premium Quality | Finest Origins | Competitive Pricing</p>
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-charcoal">
+        <div className="absolute inset-0 bg-gradient-to-br from-gold/10 to-transparent" />
+        <div className="container-custom relative z-10 text-center">
+          <p className="text-xs font-semibold tracking-[0.3em] uppercase text-gold mb-4">Our Portfolio</p>
+          <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">
+            Premium <span className="text-gold-gradient">Products</span>
+          </h1>
+          <p className="text-lg text-white/60 max-w-2xl mx-auto">
+            Finest origins · Consistent quality · Bulk supply — enquire for quotations and samples.
+          </p>
         </div>
       </section>
 
-      {/* Spices Section */}
-      <section className="section-padding">
+      <ProductMarquee />
+
+      <section className="section-padding bg-white">
         <div className="container-custom">
-          <h2 className="text-4xl font-serif font-bold text-maroon mb-4">Spices</h2>
-          <p className="text-gray-600 mb-12 max-w-2xl">
-            We source premium whole spices from reputed growing regions and trade hubs to ensure quality and continuity of supply.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.spices.map((item, idx) => (
-              <div key={idx} className="card p-6 card-hover">
-                <h3 className="text-xl font-serif font-bold text-maroon mb-2">{item.name}</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  <span className="font-semibold">Origins:</span> {item.origins}
-                </p>
-                <a href="/contact" className="text-gold font-semibold hover:text-maroon transition-colors">
-                  Request Quote →
+          <SectionHeading
+            eyebrow="Whole Spices"
+            title="Premium"
+            highlight="Spice Range"
+            subtitle="Sourced from reputed growing regions and trade hubs to ensure quality and continuity of supply."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {spiceProducts.map((item) => (
+              <article key={item.name} className="card-premium p-6 group">
+                <h3 className="text-lg font-serif font-bold text-charcoal mb-2 group-hover:text-gold-dark transition-colors">
+                  {item.name}
+                </h3>
+                <p className="text-xs font-semibold tracking-wider uppercase text-gold-dark mb-3">Origins</p>
+                <p className="text-sm text-gray-600 mb-5">{item.origins}</p>
+                <a href="/contact" className="text-xs font-semibold tracking-wider uppercase text-gold hover:text-gold-dark transition-colors">
+                  Enquire →
                 </a>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Dry Fruits Section */}
-      <section className="section-padding bg-cream">
+      <section className="section-padding bg-kraft-texture">
         <div className="container-custom">
-          <h2 className="text-4xl font-serif font-bold text-maroon mb-4">Dry Fruits</h2>
-          <p className="text-gray-600 mb-12 max-w-2xl">
-            Premium dry fruits carefully sourced from the finest origins worldwide, with rigorous quality checks and grading.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.dryFruits.map((item, idx) => (
-              <div key={idx} className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow card-hover">
-                <h3 className="text-xl font-serif font-bold text-maroon mb-2">{item.name}</h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  <span className="font-semibold">Grade:</span> {item.grade}
-                </p>
-                <a href="/contact" className="text-gold font-semibold hover:text-maroon transition-colors">
-                  Request Quote →
+          <SectionHeading
+            eyebrow="Dry Fruits"
+            title="Select"
+            highlight="Dry Fruit Range"
+            subtitle="Premium dry fruits carefully sourced with rigorous quality checks and grading."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {dryFruitProducts.map((item) => (
+              <article key={item.name} className="card-premium p-6 group">
+                <h3 className="text-lg font-serif font-bold text-charcoal mb-2">{item.name}</h3>
+                <p className="text-sm text-gray-600 mb-5">{item.detail}</p>
+                <a href="/contact" className="text-xs font-semibold tracking-wider uppercase text-gold hover:text-gold-dark transition-colors">
+                  Enquire →
                 </a>
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Value-Added Products */}
-      <section className="section-padding">
+      <section className="section-padding bg-charcoal">
         <div className="container-custom">
-          <h2 className="text-4xl font-serif font-bold text-maroon mb-4">Value-Added Products</h2>
-          <p className="text-gray-600 mb-12 max-w-2xl">
-            Customized solutions tailored to your specific requirements and business needs.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <SectionHeading
+            eyebrow="Value-Added"
+            title="Custom"
+            highlight="Solutions"
+            subtitle="Tailored to your specific requirements and business needs."
+            light
+          />
+          <div className="grid md:grid-cols-2 gap-6">
             {[
-              {
-                title: 'Spice Powders',
-                description: 'Fresh ground spice powders prepared to your specifications',
-              },
-              {
-                title: 'Customized Packing',
-                description: 'Flexible packaging options from bulk to retail quantities',
-              },
-              {
-                title: 'Bulk Packing Solutions',
-                description: 'Large-scale packaging for distributors and retailers',
-              },
-              {
-                title: 'Private Label Supply',
-                description: 'Custom branding solutions (subject to requirement)',
-              },
-            ].map((product, idx) => (
-              <div key={idx} className="gradient-maroon-gold rounded-xl p-8 text-white card-hover">
-                <h3 className="text-2xl font-serif font-bold text-gold mb-3">{product.title}</h3>
-                <p className="text-white/90 mb-4">{product.description}</p>
-                <a href="/contact" className="inline-block px-4 py-2 bg-white text-maroon font-semibold rounded-lg hover:bg-cream transition-colors">
+              { title: 'Spice Powders', desc: 'Fresh ground spice powders prepared to your specifications.' },
+              { title: 'Customized Packing', desc: 'Flexible packaging from bulk to retail quantities.' },
+              { title: 'Bulk Packing Solutions', desc: 'Large-scale packaging for distributors and retailers.' },
+              { title: 'Private Label Supply', desc: 'Custom branding solutions, subject to requirement.' },
+            ].map((product) => (
+              <div key={product.title} className="p-8 rounded-2xl border border-gold/20 bg-white/5 hover:border-gold/40 transition-all">
+                <h3 className="text-xl font-serif font-bold text-gold mb-3">{product.title}</h3>
+                <p className="text-white/60 text-sm leading-relaxed mb-5">{product.desc}</p>
+                <a href="/contact" className="text-xs font-semibold tracking-wider uppercase text-gold">
                   Learn More →
                 </a>
               </div>
@@ -125,37 +106,43 @@ export default function Products() {
         </div>
       </section>
 
-      {/* Quality Commitment */}
-      <section className="bg-maroon text-gold section-padding">
+      <section className="section-padding bg-white">
         <div className="container-custom">
-          <h2 className="text-4xl font-serif font-bold text-center mb-12">Our Quality Commitment</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 text-center">
+          <SectionHeading
+            eyebrow="Sourcing Strength"
+            title="Global Origins,"
+            highlight="Local Expertise"
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { icon: '📊', label: 'Product Grading' },
-              { icon: '✅', label: 'Quality Inspection' },
-              { icon: '🧼', label: 'Clean & Hygienic' },
-              { icon: '📦', label: 'Reliable Packaging' },
-              { icon: '⏱️', label: 'Timely Delivery' },
-            ].map((item, idx) => (
-              <div key={idx} className="flex flex-col items-center">
-                <div className="text-5xl mb-3">{item.icon}</div>
-                <p className="font-semibold">{item.label}</p>
+              { product: 'Black Pepper', origin: 'Karnataka, Kerala, Vietnam' },
+              { product: 'Green Cardamom', origin: 'Kerala, Tamil Nadu' },
+              { product: 'Black Cardamom', origin: 'Nepal, Sikkim, Siliguri' },
+              { product: 'Cloves', origin: 'Madagascar, Zanzibar' },
+              { product: 'Nutmeg & Mace', origin: 'Kerala' },
+              { product: 'Cinnamon', origin: 'Sri Lanka & Other Origins' },
+            ].map((item) => (
+              <div key={item.product} className="flex items-center gap-4 p-4 rounded-xl border border-gold/15">
+                <div className="w-2 h-2 rounded-full bg-gold flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-charcoal text-sm">{item.product}</p>
+                  <p className="text-xs text-gray-500">{item.origin}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="section-padding">
+      <section className="py-16 bg-kraft-texture">
         <div className="container-custom text-center">
-          <h2 className="text-4xl font-serif font-bold text-maroon mb-6">Need a Custom Quote?</h2>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Contact us for bulk orders, custom specifications, or sample requests.
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-charcoal mb-4">
+            Need a Custom Quote?
+          </h2>
+          <p className="text-gray-600 mb-8 max-w-xl mx-auto">
+            Contact us for bulk orders, custom specifications or sample requests.
           </p>
-          <a href="/contact" className="btn-primary inline-block">
-            Get a Quote Today
-          </a>
+          <a href="/contact" className="btn-primary">Get a Quote</a>
         </div>
       </section>
 
